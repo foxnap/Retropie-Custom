@@ -1,4 +1,4 @@
-RetroPie-Setup
+RetroPie-Custom-Setup
 ==============
 
 Tweaked Retropie Setup Script - Moving MAME4ALL and lr-genesis-plus-gx from "Main" modules to "Opt".
@@ -52,5 +52,4 @@ Thanks
 ------
 
 This script just simplifies the usage of the great works of many other people that enjoy the spirit of retrogaming. Many thanks go to them!
-# Retropie-Custom
-# Retropie-Custom
+
