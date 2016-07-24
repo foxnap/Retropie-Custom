@@ -29,7 +29,7 @@ git clone --depth=1 https://github.com/foxnap/Retropie-Custom.git
 The script is executed with 
 
 ```shell
-cd RetroPie-Setup
+cd RetroPie-Custom
 sudo ./retropie_setup.sh
 ```
 
