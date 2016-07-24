@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 # This file is part of The RetroPie Project
-# 
+#
 # The RetroPie Project is the legal property of its developers, whose names are
 # too numerous to list here. Please refer to the COPYRIGHT.md file distributed with this source.
-# 
-# See the LICENSE.md file at the top-level directory of this distribution and 
+#
+# See the LICENSE.md file at the top-level directory of this distribution and
 # at https://raw.githubusercontent.com/RetroPie/RetroPie-Setup/master/LICENSE.md
 #
 
 rp_module_id="kodi"
 rp_module_desc="Kodi - Open source home theatre software"
-rp_module_section="opt"
+rp_module_section="main"
 rp_module_flags="!mali"
 
 function _update_hook_kodi() {
@@ -49,12 +49,16 @@ function remove_kodi() {
 }
 
 function configure_kodi() {
-    # remove old directLaunch entry
-    delSystem "$md_id" "kodi"
+    echo 'SUBSYSTEM=="input", GROUP="input", MODE="0660"' > /etc/udev/rules.d/99-input.rules
 
-    addPort "$md_id" "kodi" "Kodi" "kodi"
+    mkRomDir "kodi"
 
-    if [[ ! -f /etc/udev/rules.d/99-input.rules ]]; then
-        echo 'SUBSYSTEM=="input", GROUP="input", MODE="0660"' > /etc/udev/rules.d/99-input.rules
-    fi
+    cat > "$romdir/kodi/Kodi.sh" << _EOF_
+#!/bin/bash
+/opt/retropie/supplementary/runcommand/runcommand.sh 0 "kodi-standalone" "kodi"
+_EOF_
+
+    chmod +x "$romdir/kodi/Kodi.sh"
+
+    setESSystem 'Kodi' 'kodi' '~/RetroPie/roms/kodi' '.sh .SH' '%ROM%' 'pc' 'kodi'
 }
