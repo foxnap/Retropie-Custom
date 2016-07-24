@@ -1,6 +1,9 @@
 RetroPie-Setup
 ==============
 
+Tweaked Retropie Setup Script - Moving MAME4ALL and lr-genesis-plus-gx from "Main" modules to "Opt".
+Also installs KODI by default as a seperate option in the Emulationstation menu (instead of being listed under "Ports"
+
 General Usage
 -------------
 
