@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # This file is part of The RetroPie Project
-# 
+#
 # The RetroPie Project is the legal property of its developers, whose names are
 # too numerous to list here. Please refer to the COPYRIGHT.md file distributed with this source.
-# 
-# See the LICENSE.md file at the top-level directory of this distribution and 
+#
+# See the LICENSE.md file at the top-level directory of this distribution and
 # at https://raw.githubusercontent.com/RetroPie/RetroPie-Setup/master/LICENSE.md
 #
 
@@ -117,7 +117,7 @@ function iniGet() {
         value_m="\(.*\)"
     fi
 
-    ini_value="$(sed -n "s/^[ |\t]*$key[ |\t]*$delim_strip[ |\t]*$value_m/\1/p" "$file")"
+    ini_value="$(sed -n "s/^[ |\t]*$key[ |\t]*$delim_strip[ |\t]*$value_m/\1/p" "$file" | tail -1)"
 }
 
 # arg 1: key, arg 2: default value (optional - is 1 if not used)

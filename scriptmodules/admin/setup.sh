@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # This file is part of The RetroPie Project
-# 
+#
 # The RetroPie Project is the legal property of its developers, whose names are
 # too numerous to list here. Please refer to the COPYRIGHT.md file distributed with this source.
-# 
-# See the LICENSE.md file at the top-level directory of this distribution and 
+#
+# See the LICENSE.md file at the top-level directory of this distribution and
 # at https://raw.githubusercontent.com/RetroPie/RetroPie-Setup/master/LICENSE.md
 #
 
@@ -95,8 +95,18 @@ function post_update_setup() {
 
     echo "$__version" >"$rootdir/VERSION"
 
-    # run _update_hook_id functions - eg to fix up modules for retropie-setup 4.x install detection
-    rp_updateHooks
+    local logfilename
+    __ERRMSGS=()
+    __INFMSGS=()
+    rps_logInit
+    {
+        rps_logStart
+        # run _update_hook_id functions - eg to fix up modules for retropie-setup 4.x install detection
+        printHeading "Running post update hooks"
+        rp_updateHooks
+        rps_logEnd
+    } &> >(tee >(gzip --stdout >"$logfilename"))
+    rps_printInfo "$logfilename"
 
     printMsgs "dialog" "NOTICE: The RetroPie-Setup script and pre-made RetroPie SD card images are available to download for free from https://retropie.org.uk.\n\nIt has come to our attention that some people are profiting from selling RetroPie SD cards, some including copyrighted games. This is illegal.\n\nIf you have been sold this software on its own or including games, you can let us know about it by emailing retropieproject@gmail.com"
 
@@ -375,13 +385,19 @@ function update_packages_gui_setup() {
 }
 
 function quick_install_setup() {
-    for idx in $(rp_getSectionIds core) $(rp_getSectionIds main); do
-        if rp_hasBinaries; then
+    local logfilename
+    __ERRMSGS=()
+    __INFMSGS=()
+    rps_logInit
+    {
+        rps_logStart
+        local idx
+        for idx in $(rp_getSectionIds core) $(rp_getSectionIds main); do
             rp_installModule "$idx"
-        else
-            rp_callModule "$idx"
-        fi
-    done
+        done
+        rps_logEnd
+    } &> >(tee >(gzip --stdout >"$logfilename"))
+    rps_printInfo "$logfilename"
 }
 
 function packages_gui_setup() {
